@@ -1,1 +1,66 @@
 Comando SQL
+Lenguaje DDL (Data Definition Language)
+
+**COMMANDS**
+---ALTER : changes to a table, view, or the entire database
+	*Add an additional column
+	{
+	ALTER TABLE "Tables's name" 
+	ADD "new Column's name" Value type;
+	
+	}
+	
+	*Rename a column
+	{
+	ALTER TABLE "Table's name"
+	RENAME COLUMN "old column's name" TO "new Column's name";
+
+	ojo: no se debe de poner el nombre de las columnas con ''; bota error
+	}
+
+	*Delete a column
+	{
+	ALTER TABLE "Table's name"
+	DROP COLUMN "Column's name";
+	ojo: no se debe de poner el nombre de las columnas con '';  bota error;
+	}
+
+	*ADD a primary key constraint to an atribute 'column';
+	{
+	ALTER TABLE "Tables' name"
+	ADD CONSTRAINT
+	Primary Key(Column's name);
+	}
+
+	*Remove a primary key from a table
+	{
+	ALTER TABLE "Table's name"
+	DROP Primary key
+	}
+	
+	*Add a foreing key
+	{
+	ALTER TABLE "Table's name"
+	ADD CONSTRAINT FOREING KEY(Column's name) references Table's name(table's PK column's name)
+	}
+
+	// me bota error
+	*Remove a foreing key
+	{
+	ALTER TABLE "Table's name"
+	DROP FOREING KEY;
+	}
+
+	* To add checks
+	{
+	ALTER TABLE "Table's name"
+	ADD CONSTRAINT "se le puede agregar un nombre con la finalida de hacerle un drop" (opcional) 	CHECK Atribute 	
+	}
+	*remove check
+	{
+	ALTER TABLE Salary
+	Drop CONSTRAINT nombre del check ;
+
+	}	
+
+	
