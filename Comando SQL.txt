@@ -54,7 +54,7 @@ Lenguaje DDL (Data Definition Language)
 	* To add checks
 	{
 	ALTER TABLE "Table's name"
-	ADD CONSTRAINT "se le puede agregar un nombre con la finalida de hacerle un drop" (opcional) 	CHECK Atribute 	
+	ADD CONSTRAINT "se le puede agregar un nombre con la finalida de hacerle un drop" (opcional) 	CHECK(Atribute + condicion)  	
 	}
 	*remove check
 	{
@@ -62,5 +62,145 @@ Lenguaje DDL (Data Definition Language)
 	Drop CONSTRAINT nombre del check ;
 
 	}	
+
+
+	DML(Data Manipulation Language)
+
+	AS -> AS is used to create a temporary name for the column headings. This method lets create more clear column headings. AS is optional and can be present in 	the query for readability purposes.
+	
+	Select E_SAL_ID AS ID FROM Salary
+	Ejemplo 
+
+	COUNT 
+	{ Has different formats as well as functionalities
+	Case 1:
+	Select COUNT (*) as Registro FROM Table's name // cuento las rows que existen en mi tabla y le asigno un nombre a la columna de resultado
+	
+	Case 2:
+	Select COUNT(DISTINCT "nombre de columna") FROM Table's name // nos devuelve el numero de columnas que tengan valores unicos
+	// ejemplo: una tabla que contenga empleado y estos tengan asignados un departamento por medio de COUNT(DISTINCT).... podemos obtener el # de departamentos
+	
+	Case 3:--> Group By
+	
+	SELECT  "column's name must be the same column refered in Group BY" ----------------------------------------------------------------------
+	Count(Column's name this column is used as a pivot meaning for each each row it'll assignate a +1 depending on the group that it belongs)|
+	from Table's name                                                                                                                        |
+	GROUP BY "Column's name mention in select"-----------------------------------------------------------------------------------------------|			
+	Case 4: 
+	SELECT "nombre de la columna de la cual se quiere agrupar"
+	FROM "nombre de la tabla"
+	GROUP BY "nombre de la columna a agrupar"
+	HAVING COUNT(nombre de la columna la cual se analizara para contar) condicion ejemplo(HAVING COUNT (product_ id) <50)						 
+
+	Case 5:
+	Select Column's name...., others Columns
+	From Table's name
+	Where Column's name condition
+	
+	Case 6:
+	SELECT column's name
+	From Table's name
+	ORDER BY column's name
+	nota: column's name puede ser iguales o distintas
+
+	Nota: si quiero ordenar de forma descendente tengo que agregar al lado del atributo el comnando ---------->desc
+	
+		si quiero mostrar las primeras x filas de una tabla tengo que hacer uso de ---------->LIMIT el limit siempre va al final de un querie
+
+		Si quiero mostrar las primeras x filas empezando desde la n fila puedo usar comando----> OFFSET
+		si quiero el minimo de un valor de una tabla se puede hacer de esta manera
+			
+			select *from producto
+			where precio = (SELECT min(precio) from producto)
+
+		Ejemplo:
+		si me piden encontrar los clientes que pertenecen al departamento "x1 o x2 o x3"
+		puedo hacerlo mediante el comando ------------------> IN
+		Sintaxis
+		Select * from Empleado
+		Where departamento IN ("x1", "x2" .... "x3");
+	}
+
+	WHERE atributo IN  esta arriba la sintaxis 
+	Diferencia entre WHERE Y HAVING es que en el where hace referencia a atributos mientras el having hace referencia a funciones de agregacion con validaciones
+	LEFT JOIN ----> muestra si o si las filas de la tabla izquierda no importa si no tiene match con ningun registro de la otra tabla, es por eso es que se 
+	valores nulos.
+	RIGHT JOIN ---> muestra si o si las filas de la tabla derecha no importa si no tiene con match con ningun registro de la derecha 
+		
+
+	COUNT(*) returns the count of all rows in the table, whereas COUNT() is used with Column_Name passed as an argument and counts the number of non-NULL values in 	a column that is given as an argument.
+
+
+
+
+
+DB
+CREATE TABLE Employees(
+
+    E_ID NUMBER,
+
+    E_Name VARCHAR(20),
+
+    E_Job_Title VARCHAR(20),
+
+    E_Gender VARCHAR(1),
+
+    E_Age NUMBER
+
+);
+
+INSERT INTO Employees VALUES (1, 'George', 'Sales Representative', 'M', 23);
+
+INSERT INTO Employees VALUES (2, 'Rachel', 'Manager', 'F', 35);
+
+INSERT INTO Employees VALUES (3, 'David', 'Business Development', 'M', 26);
+
+INSERT INTO Employees VALUES (4, 'Monica', 'Sales Representative', 'F', 21);
+
+
+
+
+
+CREATE TABLE Salary(
+
+    E_Sal_ID NUMBER,
+
+    E_Base_Salary NUMBER,
+
+    E_Incentives NUMBER,
+
+    E_ID NUMBER
+
+);
+
+INSERT INTO Salary VALUES(101, 15000, 2500, 1);
+
+INSERT INTO Salary VALUES(201, 35000, 7500, 2);
+
+INSERT INTO Salary VALUES(301, 25000, 5000, 3);
+
+INSERT INTO Salary VALUES(401, 17000, 2500, 4);
+	
+Orden de ejecución de los Queries
+------------------------------------------------------------------------------------------------------
+|SELECT                                                                                              |
+|FROM                                                                                                |                                                                                               
+|WHERE                                                                                               |
+|GROUP BY                                                                                            |
+|HAVING                                                                                              |
+|ORDER BY                                                                                            |
+------------------------------------------------------------------------------------------------------
+Referencias :
+https://www.w3schools.com/sql/sql_check.asp
+https://blog.devart.com/sql-select-statement.html#:~:text=columns%20are%20located-,SELECT%20statement%20options,clause%20within%20the%20SELECT%20syntax.
+https://www.datacamp.com/tutorial/count-sql-function
+
+Diapos:
+file:///C:/Users/diego/Downloads/BD05%20Lenguaje%20Query_pdf.pdf
+file:///C:/Users/diego/Downloads/BD05%20DDL%20P1_create_alter_drop.pdf
+
+
+
+
 
 	
