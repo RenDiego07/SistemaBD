@@ -134,6 +134,31 @@ Lenguaje DDL (Data Definition Language)
 
 
 
+
+
+
+	Utilizar subqueries con IN 
+
+		select  sucursal.nombre as nameSucursal, sucursal.direccion as dir, count(venta.id_venta) as cantidad from sucursal
+join venta using(id_sucursal)
+group by sucursal.id_sucursal;
+
+select  sucursal.nombre as nameSucursal, sucursal.direccion as dir, count(venta.id_venta) as cantidad,  from sucursal
+join venta using(id_sucursal) join tipopago on venta.tipopago_id_pago = tipopago.id_pago
+group by sucursal.id_sucursal;
+
+
+GROUP BY solo se puede poner atributos de las tablas por las cuales nosotros estemos haciendo el group by por ejemplo en este caso no podriamos poner un atributo de venta
+
+select  sucursal.id_sucursal, tipopago.id_pago,sucursal.nombre as nameSucursal, sucursal.direccion as dir, count(venta.id_venta) as cantidad, tipopago.nombre as ventaNombre  from sucursal
+join venta using(id_sucursal) join tipopago on venta.tipopago_id_pago = tipopago.id_pago
+group by sucursal.id_sucursal, tipopago.id_pago;
+
+
+
+
+
+
 DB
 CREATE TABLE Employees(
 
