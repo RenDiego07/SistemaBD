@@ -156,6 +156,39 @@ group by sucursal.id_sucursal, tipopago.id_pago;
 
 
 
+CREATE VIEW nombre_de_vista [<Columnas>] as <Expresion de consulta >
+
+Tablas actualizadas 
+Las views pueden ser utilizadas para INSERTS/UPDATES/DELETES/
+
+no debe de tener group by o funciones de agregadas como UNION, HAVING,  	
+no subqueries
+Se puede actualizar siempre y cuando la PK de la tabla base a actualiazar siga siendo unica en la vista 
+Basicamente como si fuera una tabla 
+
+
+
+
+-- crear una vista que muestre el numero de Empleados por departamentos
+
+create view consulta(nombre) as 
+select depa.dept_no as codDepa, count(depa.emp_no) from dept_emp as depa
+group by dept_no;
+
+Para eliminar una view se tiene que hacer drop view "nombre"
+
+
+
+
+
+Ejercicio 
+select dept_name from consulta1
+join departments 
+on consulta1.codDepa = departments.dept_no
+where h >2430;
+
+
+
 
 
 
