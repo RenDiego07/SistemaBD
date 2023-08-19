@@ -30,7 +30,7 @@ public class Conexion {
         try{
         Class.forName(driver);
         cx= DriverManager.getConnection(url+bd,user,password);
-        System.out.println("SI SE CONECTO A LA BASE DE DATOS " + bd);
+        //System.out.println("SI SE CONECTO A LA BASE DE DATOS " + bd);
         
         }catch(ClassNotFoundException |SQLException ex){
             System.out.println("NO SE CONECTO A LA BASE DE DATOS " + bd);

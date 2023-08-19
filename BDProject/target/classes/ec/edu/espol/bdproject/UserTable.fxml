@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.bdproject.UserTableController">
    <children>
-      <TableView fx:id="tableView" layoutX="160.0" layoutY="-2.0" prefHeight="461.0" prefWidth="646.0">
+      <TableView fx:id="tableView" layoutX="160.0" layoutY="-2.0" onMouseClicked="#DeleteHandler" prefHeight="461.0" prefWidth="646.0">
         <columns>
             <TableColumn fx:id="colIDUsuario" prefWidth="79.0" text="IDUsuario" />
           <TableColumn fx:id="colNombre" prefWidth="89.0" text="nombre" />
@@ -44,8 +44,8 @@
             <AnchorPane prefHeight="118.0" prefWidth="629.0">
                <children>
                   <Button fx:id="btInsert" layoutX="76.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Insert" />
-                  <Button layoutX="285.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="edit" />
-                  <Button layoutX="487.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" text="delete" />
+                  <Button fx:id="btEdit" layoutX="285.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="edit" />
+                  <Button fx:id="btDelete" layoutX="487.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" text="delete" />
                </children>
                <opaqueInsets>
                   <Insets />
