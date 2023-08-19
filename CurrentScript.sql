@@ -1,4 +1,3 @@
-
 drop database if exists RentaUnCuento;
 create database RentaUnCuento;
 use  RentaUnCuento;
@@ -11,11 +10,13 @@ create table membresia (
 	numeroDeCuentos  int check(numeroDeCuentos >0)
 	);
 
+
 create table Repartidor(
 	IDrepartidor char(30) NOT NULL PRIMARY KEY,
     nombre Varchar(50) NOT NULL,
     apellido Varchar(50) NOT NULL
 );
+
 
 create table Libro(
 	IDLibro varchar(15) not null PRIMARY KEY,
@@ -39,7 +40,7 @@ create table usuario(
     mail char(50) NOT NULL,
 	Tipomembresia varchar (20),
     deudas double not null check(deudas >=0 ),
-FOREIGN KEY (TipoMembresia) REFERENCES membresia(IDMembresia)
+FOREIGN KEY (TipoMembresia) REFERENCES membresia(IDMembresia) on delete cascade on update cascade
 );
 
 create table compra_libro (
@@ -48,8 +49,8 @@ create table compra_libro (
     IDUsuario char(10),
     fechaCompra date,
     cantidad int,
-    foreign key(IDLibro) references libro(IDLibro),
-    foreign key(IDUsuario) references usuario(IDUsuario)
+    foreign key(IDLibro) references libro(IDLibro) on delete cascade on update cascade,
+    foreign key(IDUsuario) references usuario(IDUsuario) on delete cascade on update cascade
     
 );
 
@@ -64,7 +65,6 @@ tipo varchar(15) NOT NULL,
 );
 
 
-
 create table compra(
 	IDCompra int NOT NULL Primary Key auto_increment,
     fechaCompra  DATE NOT NULL,
@@ -74,9 +74,9 @@ create table compra(
     IDMembresia Varchar(20),
     cupon boolean NOT NULL, 
     NumCuentos int check (NumCuentos >0) NOT NULL,
-    FOREIGN KEY (UsuarioID) references Usuario(IDUsuario),
-    FOREIGN KEY (IDPaquete) references Paquete(ID_Paquete),
-    FOREIGN KEY (IDMembresia) references Membresia(IDMembresia)
+    FOREIGN KEY (UsuarioID) references Usuario(IDUsuario) on delete cascade on update cascade,
+    FOREIGN KEY (IDPaquete) references Paquete(ID_Paquete) on delete cascade on update cascade,
+    FOREIGN KEY (IDMembresia) references Membresia(IDMembresia) on delete cascade on update cascade
 );
 
 create table Pago(
@@ -86,9 +86,9 @@ create table Pago(
     fecha DATE NOT NULL,
     tipoPago varchar(15) NOT NULL,
     NumeroCuenta char(30),
- IDCompra_libro varchar(15),
-    FOREIGN KEY(CompraId) REFERENCES compra(IDCompra),
-  FOREIGN KEY(IDCompra_libro) REFERENCES compra_libro(IDCompra_libro)
+	IDCompra_libro varchar(15),
+    FOREIGN KEY(CompraId) REFERENCES compra(IDCompra) on delete cascade on update cascade,
+  FOREIGN KEY(IDCompra_libro) REFERENCES compra_libro(IDCompra_libro) on delete cascade on update cascade
 );
 
 
@@ -103,18 +103,18 @@ IDEnvio int not null PRIMARY KEY auto_increment,
     fechaDevolucionFija DATE,
     IDCompra_libro varchar(15),
 
-    FOREIGN KEY (usuarioId) REFERENCES Usuario(IDUsuario),
-    FOREIGN KEY (repartidorId) REFERENCES repartidor(IDRepartidor),
-    FOREIGN KEY (CompraId) REFERENCES Compra(IDCompra),
-    FOREIGN KEY (IDCompra_libro) REFERENCES compra_libro(IDCompra_libro)
+    FOREIGN KEY (usuarioId) REFERENCES Usuario(IDUsuario) on delete cascade on update cascade,
+    FOREIGN KEY (repartidorId) REFERENCES repartidor(IDRepartidor) on delete cascade on update cascade,
+    FOREIGN KEY (CompraId) REFERENCES Compra(IDCompra) on delete cascade on update cascade,
+    FOREIGN KEY (IDCompra_libro) REFERENCES compra_libro(IDCompra_libro) on delete cascade on update cascade
 );
 
 create Table EntregaLibros(
 	EnvioId int(10),
     LibroId varchar(15),
     PRIMARY KEY( EnvioId, LibroId),
-    FOREIGN KEY (EnvioId) REFERENCES Envio(IDEnvio),
-    FOREIGN KEY (LibroId) REFERENCES Libro(IDLibro)
+    FOREIGN KEY (EnvioId) REFERENCES Envio(IDEnvio) on delete cascade on update cascade,
+    FOREIGN KEY (LibroId) REFERENCES Libro(IDLibro) on delete cascade on update cascade
 );
 
 create Table LibrosAgregados(
@@ -122,11 +122,9 @@ create Table LibrosAgregados(
     IDUsuario varchar (10) NOT NULL,
     estado varchar(10) NOT NULL,
     PRIMARY KEY(IDLibro, IDUsuario),
-    FOREIGN KEY (IDLibro) REFERENCES Libro(IDLibro),
-    FOREIGN KEY (IDUsuario) REFERENCES usuario(IDUsuario)
+    FOREIGN KEY (IDLibro) REFERENCES Libro(IDLibro) on delete cascade on update cascade,
+    FOREIGN KEY (IDUsuario) REFERENCES usuario(IDUsuario) on delete cascade on update cascade
 );
-
-
 
 
 insert into paquete values ('TP1',350,'Paquete-1',2);
@@ -224,7 +222,6 @@ insert into libro values ('9988776687609', "Una gallina en la azotea", 'Disfruta
 insert into libro values ("9988976810223", "Un extraño vecino", 'Agitando despacio sus alas, sin levantar apenas viento, llega tranquilo y en silencio, el señor abeja a su hogar. al final de la jornada, tan solo quiere descansar. Cri, cricri, cricricri no puede ser. De lunes a domingo, en las páginas de este libro, el señor abeja no logra dormir por culpa de un imperceptible CRI. ¿Quién será el extraño vecino que emite ese ruido?',
 8,"Misterio/Fantasia","Ana Rodriguez", "Amigos de papel","Español", 700);
 
-
 insert into EntregaLibros values (1,'9993224561224');
 insert into EntregaLibros values (2,'9876543218778');
 insert into EntregaLibros values (3,'9678567398765');
@@ -235,10 +232,6 @@ insert into EntregaLibros values (7, "9911882277334");
 insert into EntregaLibros values (8,"9993224561224");
 insert into EntregaLibros values (9,"9876543218778");
 insert into EntregaLibros values(10, "9678567398765");
-
-
-
-
 
 
 insert into librosagregados values("9788416750375", "0605996685", "rentado");
@@ -253,8 +246,6 @@ insert into librosagregados values("9988776687609", "1221344256", "rentado");
 insert into librosagregados values("9988976810223", "1122334455", "rentado");
 
 
-
-
 insert into compra_libro values("C3","9993224561224","0224035901", "2023-02-3",1);
 insert into compra_libro values("C4","9876543218778","1928736455","2023-05-07",1);
 insert into compra_libro values("C5","9678567398765","0224035901","2022-03-03",1);
@@ -266,132 +257,3 @@ insert into compra_libro values("C11","9911882277334","1928736455","2022-07-12",
 insert into compra_libro values("C12","9788416750375","0605996685","2022-03-22",1);
 insert into compra_libro values("C16","9993224561224","1234543210","2022-03-22",1);
 
--- TRIGGERS
-
--- Trigger para la tabla 'membresia'
-DELIMITER //
-CREATE TRIGGER Before_Delete_Membresia
-BEFORE DELETE ON membresia
-FOR EACH ROW
-BEGIN
-    DECLARE cnt INT;
-    SELECT COUNT(*) INTO cnt FROM usuario WHERE Tipomembresia = OLD.IDMembresia;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay usuarios con esta membresía.';
-    END IF;
-END;
-//
-DELIMITER ;
-
--- Trigger para la tabla 'usuario'
-DELIMITER //
-CREATE TRIGGER Before_Delete_Usuario
-BEFORE DELETE ON usuario
-FOR EACH ROW
-BEGIN
-    DECLARE cnt INT;
-    SELECT COUNT(*) INTO cnt FROM compra WHERE UsuarioID = OLD.IDUsuario;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este usuario.';
-    END IF;
-END;
-//
-DELIMITER ;
-
--- Trigger para la tabla 'Paquete'
-DELIMITER //
-CREATE TRIGGER Before_Delete_Paquete
-BEFORE DELETE ON Paquete
-FOR EACH ROW
-BEGIN
-    DECLARE cnt INT;
-    SELECT COUNT(*) INTO cnt FROM compra WHERE IDPaquete = OLD.ID_Paquete;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este paquete.';
-    END IF;
-END;
-//
-DELIMITER ;
-
--- Trigger para la tabla 'Libro'
-DELIMITER //
-CREATE TRIGGER Before_Delete_Libro
-BEFORE DELETE ON Libro
-FOR EACH ROW
-BEGIN
-    DECLARE cnt INT;
-    SELECT COUNT(*) INTO cnt FROM compra_libro WHERE IDLibro = OLD.IDLibro;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este libro.';
-    END IF;
-    
-    SELECT COUNT(*) INTO cnt FROM EntregaLibros WHERE LibroId = OLD.IDLibro;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay entregas asociadas a este libro.';
-    END IF;
-END;
-//
-DELIMITER ;
-
--- Trigger para la tabla 'Repartidor'
-DELIMITER //
-CREATE TRIGGER Before_Delete_Repartidor
-BEFORE DELETE ON Repartidor
-FOR EACH ROW
-BEGIN
-    DECLARE cnt INT;
-    SELECT COUNT(*) INTO cnt FROM Envio WHERE repartidorId = OLD.IDRepartidor;
-    IF cnt > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay envíos asociados a este repartidor.';
-    END IF;
-END;
-//
-DELIMITER ;
-
--- PROCEDIMIENTOS
-
-DELIMITER //
-
--- Procedimiento almacenado para eliminar una membresía y sus usuarios relacionados
-CREATE PROCEDURE DeleteMembership(IN membershipID VARCHAR(20))
-BEGIN
-    DELETE FROM usuario WHERE Tipomembresia = membershipID;
-    DELETE FROM membresia WHERE IDMembresia = membershipID;
-END;
-//
-
--- Procedimiento almacenado para eliminar un usuario y sus compras relacionadas
-CREATE PROCEDURE DeleteUser(IN userID CHAR(10))
-BEGIN
-    DELETE FROM compra WHERE UsuarioID = userID;
-    DELETE FROM usuario WHERE IDUsuario = userID;
-END;
-//
-
--- Procedimiento almacenado para eliminar un paquete y sus compras relacionadas
-CREATE PROCEDURE DeletePackage(IN packageID VARCHAR(20))
-BEGIN
-    DELETE FROM compra WHERE IDPaquete = packageID;
-    DELETE FROM Paquete WHERE ID_Paquete = packageID;
-END;
-//
-
--- Procedimiento almacenado para eliminar un libro y sus compras/entregas relacionadas
-CREATE PROCEDURE DeleteBook(IN bookID VARCHAR(15))
-BEGIN
-    DELETE FROM compra_libro WHERE IDLibro = bookID;
-    DELETE FROM EntregaLibros WHERE LibroId = bookID;
-    DELETE FROM LibrosAgregados WHERE IDLibro = bookID;
-    DELETE FROM Libro WHERE IDLibro = bookID;
-END;
-//
-
--- Procedimiento almacenado para eliminar un repartidor y las entregas relacionadas
-CREATE PROCEDURE DeleteDeliveryPerson(IN deliveryPersonID CHAR(30))
-BEGIN
-    DELETE FROM Envio WHERE repartidorId = deliveryPersonID;
-    DELETE FROM Repartidor WHERE IDRepartidor = deliveryPersonID;
-END;
-//
-
-DELIMITER ;
