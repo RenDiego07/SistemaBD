@@ -65,7 +65,7 @@ public class AdminMenuController implements Initializable {
                     switchToUsuario();
                     break;
                 case("Compras"):
-                    //switchToCompras();
+                    switchToCompras();
                     break;
                 case ("Libros"):
                     // switchToLibros
@@ -82,7 +82,7 @@ public class AdminMenuController implements Initializable {
     }
     public void switchToCompras(){
         try{
-            App.setRoot("CompraQueries");
+            App.setRoot("CompraBD");
         }catch(Exception r){
             r.printStackTrace();
         }

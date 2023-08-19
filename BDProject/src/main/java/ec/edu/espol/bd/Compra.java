@@ -11,12 +11,16 @@ import java.sql.Date;
  * @author diego
  */
 public class Compra {
-    private int idCompra;
+    private int IDCompra;
     private Date fechaCompra;
     private int regalo;
     private String usuarioID;
     private String IDPaquete;
     private String IDMembresia;
+
+    public int getIDCompra() {
+        return IDCompra;
+    }
     private int cupon;
     private int numeroCuentos;
     
@@ -25,7 +29,7 @@ public class Compra {
     }
 
     public Compra(int idCompra, Date fechaCompra, int regalo, String usuarioID, int cupon, int numeroCuentos) {
-        this.idCompra = idCompra;
+        this.IDCompra = idCompra;
         this.fechaCompra = fechaCompra;
         this.regalo = regalo;
         this.usuarioID = usuarioID;
@@ -35,7 +39,7 @@ public class Compra {
     
 
     public int getIdCompra() {
-        return idCompra;
+        return IDCompra;
     }
 
     public Date getFechaCompra() {
