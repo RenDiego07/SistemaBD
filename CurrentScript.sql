@@ -265,3 +265,133 @@ insert into compra_libro values("C10","9988976810223","1234543210","2023-11-13",
 insert into compra_libro values("C11","9911882277334","1928736455","2022-07-12",1);
 insert into compra_libro values("C12","9788416750375","0605996685","2022-03-22",1);
 insert into compra_libro values("C16","9993224561224","1234543210","2022-03-22",1);
+
+-- TRIGGERS
+
+-- Trigger para la tabla 'membresia'
+DELIMITER //
+CREATE TRIGGER Before_Delete_Membresia
+BEFORE DELETE ON membresia
+FOR EACH ROW
+BEGIN
+    DECLARE cnt INT;
+    SELECT COUNT(*) INTO cnt FROM usuario WHERE Tipomembresia = OLD.IDMembresia;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay usuarios con esta membresía.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- Trigger para la tabla 'usuario'
+DELIMITER //
+CREATE TRIGGER Before_Delete_Usuario
+BEFORE DELETE ON usuario
+FOR EACH ROW
+BEGIN
+    DECLARE cnt INT;
+    SELECT COUNT(*) INTO cnt FROM compra WHERE UsuarioID = OLD.IDUsuario;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este usuario.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- Trigger para la tabla 'Paquete'
+DELIMITER //
+CREATE TRIGGER Before_Delete_Paquete
+BEFORE DELETE ON Paquete
+FOR EACH ROW
+BEGIN
+    DECLARE cnt INT;
+    SELECT COUNT(*) INTO cnt FROM compra WHERE IDPaquete = OLD.ID_Paquete;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este paquete.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- Trigger para la tabla 'Libro'
+DELIMITER //
+CREATE TRIGGER Before_Delete_Libro
+BEFORE DELETE ON Libro
+FOR EACH ROW
+BEGIN
+    DECLARE cnt INT;
+    SELECT COUNT(*) INTO cnt FROM compra_libro WHERE IDLibro = OLD.IDLibro;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay compras asociadas a este libro.';
+    END IF;
+    
+    SELECT COUNT(*) INTO cnt FROM EntregaLibros WHERE LibroId = OLD.IDLibro;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay entregas asociadas a este libro.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- Trigger para la tabla 'Repartidor'
+DELIMITER //
+CREATE TRIGGER Before_Delete_Repartidor
+BEFORE DELETE ON Repartidor
+FOR EACH ROW
+BEGIN
+    DECLARE cnt INT;
+    SELECT COUNT(*) INTO cnt FROM Envio WHERE repartidorId = OLD.IDRepartidor;
+    IF cnt > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se puede eliminar, hay envíos asociados a este repartidor.';
+    END IF;
+END;
+//
+DELIMITER ;
+
+-- PROCEDIMIENTOS
+
+DELIMITER //
+
+-- Procedimiento almacenado para eliminar una membresía y sus usuarios relacionados
+CREATE PROCEDURE DeleteMembership(IN membershipID VARCHAR(20))
+BEGIN
+    DELETE FROM usuario WHERE Tipomembresia = membershipID;
+    DELETE FROM membresia WHERE IDMembresia = membershipID;
+END;
+//
+
+-- Procedimiento almacenado para eliminar un usuario y sus compras relacionadas
+CREATE PROCEDURE DeleteUser(IN userID CHAR(10))
+BEGIN
+    DELETE FROM compra WHERE UsuarioID = userID;
+    DELETE FROM usuario WHERE IDUsuario = userID;
+END;
+//
+
+-- Procedimiento almacenado para eliminar un paquete y sus compras relacionadas
+CREATE PROCEDURE DeletePackage(IN packageID VARCHAR(20))
+BEGIN
+    DELETE FROM compra WHERE IDPaquete = packageID;
+    DELETE FROM Paquete WHERE ID_Paquete = packageID;
+END;
+//
+
+-- Procedimiento almacenado para eliminar un libro y sus compras/entregas relacionadas
+CREATE PROCEDURE DeleteBook(IN bookID VARCHAR(15))
+BEGIN
+    DELETE FROM compra_libro WHERE IDLibro = bookID;
+    DELETE FROM EntregaLibros WHERE LibroId = bookID;
+    DELETE FROM LibrosAgregados WHERE IDLibro = bookID;
+    DELETE FROM Libro WHERE IDLibro = bookID;
+END;
+//
+
+-- Procedimiento almacenado para eliminar un repartidor y las entregas relacionadas
+CREATE PROCEDURE DeleteDeliveryPerson(IN deliveryPersonID CHAR(30))
+BEGIN
+    DELETE FROM Envio WHERE repartidorId = deliveryPersonID;
+    DELETE FROM Repartidor WHERE IDRepartidor = deliveryPersonID;
+END;
+//
+
+DELIMITER ;
