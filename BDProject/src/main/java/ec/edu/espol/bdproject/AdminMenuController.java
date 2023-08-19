@@ -68,7 +68,7 @@ public class AdminMenuController implements Initializable {
                     switchToCompras();
                     break;
                 case ("Libros"):
-                    // switchToLibros
+                     switchToLibros();
                     break;
             }
         });
@@ -89,7 +89,7 @@ public class AdminMenuController implements Initializable {
     }
    public void switchToLibros(){
         try{
-            App.setRoot("LibrosQueries");
+            App.setRoot("BookTable");
         }catch(Exception r){
             r.printStackTrace();
         }
