@@ -334,8 +334,10 @@ public class CompraBDController implements Initializable {
     
     private boolean validMembresiaNPaquete(){
         if(AuxAlgorithm.isMembresia(txtIDMembresia.getText()) && AuxAlgorithm.IDAlreadyInBDPackages(txtIDPaquete.getText()) ){
+            Alert4TwoPurchases();
             return false;
         }else if(!AuxAlgorithm.isMembresia(txtIDMembresia.getText()) && !AuxAlgorithm.IDAlreadyInBDPackages(txtIDPaquete.getText())){
+            AlertNeitherProductsExist();
             return false;
         }else if(AuxAlgorithm.isMembresia(txtIDMembresia.getText()) && !AuxAlgorithm.IDAlreadyInBDPackages(txtIDPaquete.getText())){
             return true;
@@ -410,5 +412,15 @@ public class CompraBDController implements Initializable {
             IDCompraNotExistent();
             return false;
         }
-    }       
+    }
+    private void Alert4TwoPurchases(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("ERROR. NO SE PUEDE COMPRAR UNA MEMBRESIA Y UN PAQUETE A LA VEZ");
+        alert.showAndWait();
+    }
+    private void AlertNeitherProductsExist(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("ERROR. NO EXISTE MEMBRESIA NI PAQUETE");
+        alert.showAndWait();
+    }
 }
