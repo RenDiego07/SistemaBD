@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.bdproject.BookTableController">
+   <children>
+      <VBox alignment="CENTER" layoutX="4.0" layoutY="58.0" prefHeight="509.0" prefWidth="154.0" spacing="7.0">
+         <children>
+            <Label prefHeight="18.0" prefWidth="41.0" text="IDLibro" />
+            <TextField fx:id="txtIDLibro" />
+            <Label prefHeight="18.0" prefWidth="30.0" text="titulo" />
+            <TextField fx:id="txtTitulo" />
+            <Label text="Descripcion" />
+            <TextField fx:id="txtDescripcion" />
+            <Label prefHeight="18.0" prefWidth="32.0" text="stock" />
+            <TextField fx:id="txtStock" />
+            <Label prefHeight="18.0" prefWidth="51.0" text="categoria" />
+            <TextField fx:id="txtCategoria" />
+            <Label prefHeight="18.0" prefWidth="30.0" text="autor" />
+            <TextField fx:id="txtAutor" />
+            <Label prefHeight="18.0" prefWidth="46.0" text="editorial" />
+            <TextField fx:id="txtEditorial" />
+            <Label text="idioma" />
+            <TextField fx:id="txtIdioma" />
+            <Label text="precio" />
+            <TextField fx:id="txtPrecio" />
+         </children>
+      </VBox>
+      <TableView fx:id="tableView" layoutX="160.0" layoutY="-2.0" onMouseClicked="#fillTextFields" prefHeight="461.0" prefWidth="646.0">
+        <columns>
+            <TableColumn fx:id="colIDLibro" prefWidth="79.0" text="IDLibro" />
+          <TableColumn fx:id="colTitulo" prefWidth="89.0" text="titulo" />
+          <TableColumn fx:id="colDescripcion" prefWidth="118.0" text="descripcion" />
+            <TableColumn fx:id="colStock" prefWidth="70.0" text="stock" />
+            <TableColumn fx:id="colCategoria" minWidth="0.0" prefWidth="70.0" text="categoria" />
+            <TableColumn fx:id="colAutor" prefWidth="77.0" text="autor" />
+            <TableColumn fx:id="colEditorial" text="editorial" />
+            <TableColumn fx:id="colIdioma" prefWidth="75.0" text="idioma" />
+            <TableColumn fx:id="colPrecio" prefWidth="75.0" text="precio" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <HBox layoutX="177.0" layoutY="457.0" prefHeight="118.0" prefWidth="622.0">
+         <children>
+            <AnchorPane prefHeight="118.0" prefWidth="629.0">
+               <children>
+                  <Button fx:id="btInsert" layoutX="193.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="Insert" />
+                  <Button fx:id="btEdit" layoutX="349.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="135.0" text="edit" />
+                  <Button fx:id="btDelete" layoutX="504.0" layoutY="38.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" text="delete" />
+                  <Button fx:id="btAdminMenu" layoutX="14.0" layoutY="30.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="160.0" text="AdminMenu" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <ComboBox fx:id="viewsCB" layoutX="6.0" layoutY="23.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

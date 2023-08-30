@@ -1,0 +1,15 @@
+ec\edu\espol\bd\Libro.class
+ec\edu\espol\bd\Repartidor.class
+ec\edu\espol\bd\Usuario.class
+ec\edu\espol\bdproject\BookTableController.class
+ec\edu\espol\bdproject\AdminMenuController.class
+ec\edu\espol\bdproject\CompraBDController.class
+ec\edu\espol\bd\BD.class
+module-info.class
+ec\edu\espol\bdproject\App.class
+ec\edu\espol\bdproject\CoverController.class
+ec\edu\espol\bd\Compra.class
+ec\edu\espol\bd\Paquete.class
+ec\edu\espol\bd\Conexion.class
+ec\edu\espol\bdproject\UserTableController.class
+ec\edu\espol\bd\AuxAlgorithm.class
